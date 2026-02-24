@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INNOVASPECTRIX | Advanced Nanomaterial Engineering</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #050d1a;
+    --deep: #07152a;
+    --mid: #0a1e3d;
+    --accent: #00d4ff;
+    --accent2: #7b5ea7;
+    --gold: #f0c060;
+    --text: #c8dff0;
+    --light: #e8f4ff;
+    --white: #ffffff;
+    --glass: rgba(0,212,255,0.05);
+    --glassborder: rgba(0,212,255,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    font-size: 18px;
+    overflow-x: hidden;
+  }
+
+  /* ---- CANVAS BG ---- */
+  #bg-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    backdrop-filter: blur(20px);
+    background: rgba(5,13,26,0.7);
+    border-bottom: 1px solid var(--glassborder);
+    transition: all 0.4s;
+  }
+
+  .nav-logo {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--accent);
+    border: none;
+    padding: 0.6rem 1.6rem;
+    cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+
+  .nav-cta:hover { background: var(--gold); }
+
+  /* ---- HERO ---- */
+  #hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+  }
+
+  .hero-content { max-width: 780px; }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text);
+    max-width: 580px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--accent);
+    border: none;
+    padding: 0.9rem 2.4rem;
+    cursor: pointer;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
+
+  .btn-outline {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: transparent;
+    border: 1px solid var(--glassborder);
+    padding: 0.9rem 2.4rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    background: var(--glass);
+    transform: translateY(-2px);
+  }
+
+  /* hero floating stats */
+  .hero-stats {
+    position: absolute;
+    right: 4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .stat-item {
+    background: var(--glass);
+    border: 1px solid var(--glassborder);
+    backdrop-filter: blur(10px);
+    padding: 1.4rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: floatStat 6s ease-in-out infinite;
+  }
+
+  .stat-item:nth-child(2) { animation-delay: 2s; }
+  .stat-item:nth-child(3) { animation-delay: 4s; }
+
+  @keyframes floatStat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+  }
+
+  .stat-num {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+
+  /* scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.5;
+    animation: scrollBounce 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  .scroll-hint span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--text);
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  /* ---- SECTIONS ---- */
+  section { position: relative; z-index: 1; }
+
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-tag::before {
+    content: '';
+    display: inline-block;
+    width: 1.5rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 em { color: var(--accent); font-style: normal; }
+
+  .section-intro {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--text);
+    max-width: 620px;
+  }
+
+  /* ---- OFFER ---- */
+  #offer {
+    padding: 7rem 4rem;
+  }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 4rem;
+    align-items: center;
+  }
+
+  .offer-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .offer-card {
+    background: var(--glass);
+    border: 1px solid var(--glassborder);
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+    cursor: default;
+  }
+
+  .offer-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.4s;
+  }
+
+  .offer-card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-4px); }
+  .offer-card:hover::after { width: 100%; }
+
+  .offer-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .offer-card h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+  }
+
+  .offer-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text);
+    opacity: 0.8;
+  }
+
+  .offer-text .tag-highlight {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    padding: 0.3rem 0.8rem;
+    margin: 0.3rem 0.3rem 0.3rem 0;
+  }
+
+  /* ---- PRODUCTS ---- */
+  #products {
+    padding: 7rem 4rem;
+    background: linear-gradient(180deg, transparent, rgba(7,21,42,0.8), transparent);
+  }
+
+  .products-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    gap: 2rem;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .product-card {
+    background: linear-gradient(135deg, var(--glass), rgba(123,94,167,0.05));
+    border: 1px solid var(--glassborder);
+    padding: 2.5rem 1.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -50%;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%);
+    transition: all 0.5s;
+    opacity: 0;
+  }
+
+  .product-card:hover { transform: translateY(-6px); border-color: rgba(0,212,255,0.3); }
+  .product-card:hover::before { opacity: 1; }
+
+  .product-dim {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.15;
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .product-card h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.03em;
+  }
+
+  .product-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text);
+    opacity: 0.8;
+    margin-bottom: 1.2rem;
+  }
+
+  .product-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .ptag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.15);
+    padding: 0.2rem 0.6rem;
+    text-transform: uppercase;
+  }
+
+  .product-custom {
+    grid-column: span 2;
+    background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(123,94,167,0.08));
+    border: 1px solid rgba(0,212,255,0.2);
+    padding: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .product-custom h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+  }
+
+  /* ---- APPLICATIONS ---- */
+  #applications {
+    padding: 7rem 4rem;
+  }
+
+  .app-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .app-card {
+    border: 1px solid var(--glassborder);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+    background: var(--glass);
+  }
+
+  .app-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .app-card:hover::before { transform: scaleX(1); }
+  .app-card:hover { border-color: rgba(0,212,255,0.2); }
+
+  .app-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .app-card h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.03em;
+  }
+
+  .app-card p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--text);
+    opacity: 0.8;
+  }
+
+  /* ---- WHY US ---- */
+  #why {
+    padding: 7rem 4rem;
+    background: linear-gradient(180deg, transparent, rgba(10,30,61,0.6), transparent);
+  }
+
+  .why-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .why-list {
+    list-style: none;
+    margin-top: 2rem;
+  }
+
+  .why-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(0,212,255,0.08);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+    transition: color 0.3s;
+  }
+
+  .why-list li:hover { color: var(--light); }
+
+  .why-list li::before {
+    content: '◆';
+    color: var(--accent);
+    font-size: 0.5rem;
+    margin-top: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /* challenge box */
+  .challenge-box {
+    background: linear-gradient(135deg, rgba(0,212,255,0.04), rgba(123,94,167,0.04));
+    border: 1px solid var(--glassborder);
+    padding: 3rem;
+  }
+
+  .challenge-box h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  .challenge-box p {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .challenge-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  .ch-item {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 1rem 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .ch-item::before { content: '×'; color: #ff6b6b; font-size: 0.9rem; }
+
+  /* ---- ABOUT ---- */
+  #about {
+    padding: 7rem 4rem;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 6rem;
+    margin-top: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .vision-mission {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .vm-card {
+    background: var(--glass);
+    border: 1px solid var(--glassborder);
+    border-left: 3px solid var(--accent);
+    padding: 1.8rem;
+  }
+
+  .vm-card h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+
+  .vm-card p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--text);
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+
+  .val-item {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--light);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .val-item::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ---- TEAM ---- */
+  #team {
+    padding: 7rem 4rem;
+    background: linear-gradient(180deg, transparent, rgba(7,21,42,0.5), transparent);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .team-card {
+    background: var(--glass);
+    border: 1px solid var(--glassborder);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 0;
+    background: linear-gradient(to top, rgba(0,212,255,0.05), transparent);
+    transition: height 0.4s;
+  }
+
+  .team-card:hover::before { height: 100%; }
+  .team-card:hover { border-color: rgba(0,212,255,0.25); transform: translateY(-4px); }
+
+  .team-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 1.2rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--navy);
+  }
+
+  .team-card h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.03em;
+  }
+
+  .team-card .role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  /* ---- CONTACT ---- */
+  #contact {
+    padding: 7rem 4rem;
+    position: relative;
+  }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .contact-quote {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--light);
+    border-left: 2px solid var(--accent);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .contact-details { margin-top: 1.5rem; }
+
+  .contact-detail {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0,212,255,0.08);
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .contact-detail strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    min-width: 70px;
+    margin-top: 0.2rem;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: rgba(0,212,255,0.04);
+    border: 1px solid var(--glassborder);
+    padding: 0.85rem 1rem;
+    color: var(--light);
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: rgba(0,212,255,0.5); }
+
+  .form-group select option { background: var(--deep); }
+
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  /* ---- FOOTER ---- */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--glassborder);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-logo {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-info {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    opacity: 0.5;
+    text-align: center;
+  }
+
+  .footer-tagline {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.5;
+    max-width: 300px;
+    text-align: right;
+  }
+
+  /* ---- DIVIDER ---- */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glassborder), transparent);
+    margin: 0 4rem;
+    width: calc(100% - 8rem);
+  }
+
+  /* ---- ANIMATIONS ---- */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 1200px) {
+    nav { padding: 1rem 2rem; }
+    #hero, #offer, #products, #applications, #why, #about, #team, #contact { padding: 5rem 2rem; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .product-custom { grid-column: span 2; }
+    .team-grid { grid-template-columns: repeat(3, 1fr); }
+    footer { padding: 2rem; }
+  }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hero-stats { display: none; }
+    .offer-grid, .why-inner, .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .app-grid { grid-template-columns: 1fr 1fr; }
+    .products-grid { grid-template-columns: 1fr; }
+    .product-custom { grid-column: span 1; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+    .offer-cards { grid-template-columns: 1fr; }
+    .app-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .challenge-items { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Innova<span>Spectrix</span></div>
+  <ul class="nav-links">
+    <li><a href="#offer">Offerings</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#applications">Applications</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Advanced Materials Startup · Chennai, India</div>
+    <h1>Engineering <em>Quantum</em> &<br>Low-Dimensional<br>Nanomaterials</h1>
+    <p class="hero-sub">Precision synthesis of 0D, 1D, and 2D nanomaterials tailored for next-generation applications in energy storage, electric vehicles, semiconductors, and beyond.</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-primary">Explore Products</a>
+      <a href="#contact" class="btn-outline">Request Custom Synthesis</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num">0D · 1D · 2D</span>
+      <span class="stat-label">Material Dimensions</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">4+</span>
+      <span class="stat-label">Core Nanomaterial Families</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">6+</span>
+      <span class="stat-label">Application Sectors</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- WHAT WE OFFER -->
+<section id="offer">
+  <div class="offer-grid">
+    <div class="offer-text fade-up">
+      <div class="section-tag">What We Offer</div>
+      <h2>Precision-Engineered<br><em>Nanomaterials</em></h2>
+      <p class="section-intro" style="margin-bottom:2rem;">We specialize in the synthesis of advanced nanomaterials with exceptional control over morphology, composition, and surface properties.</p>
+      <div>
+        <span class="tag-highlight">Quantum Dots (0D)</span>
+        <span class="tag-highlight">Quantum Sheets (2D)</span>
+        <span class="tag-highlight">1D Nanostructures (CNT)</span>
+        <span class="tag-highlight">Perovskites</span>
+        <span class="tag-highlight">TMDs</span>
+        <span class="tag-highlight">Metal Oxides</span>
+      </div>
+    </div>
+    <div class="offer-cards fade-up">
+      <div class="offer-card">
+        <span class="offer-icon">⚛️</span>
+        <h3>Quantum Dots (0D)</h3>
+        <p>Size-controlled nanomaterials with tunable electronic and optical properties.</p>
+      </div>
+      <div class="offer-card">
+        <span class="offer-icon">🔬</span>
+        <h3>Quantum Sheets (2D)</h3>
+        <p>Layer-controlled Transition Metal Dichalcogenides (TMDs) with precise thickness.</p>
+      </div>
+      <div class="offer-card">
+        <span class="offer-icon">🧵</span>
+        <h3>1D Nanostructures</h3>
+        <p>Carbon Nanotubes and high-aspect-ratio nanomaterials for charge transport.</p>
+      </div>
+      <div class="offer-card">
+        <span class="offer-icon">💎</span>
+        <h3>Perovskites</h3>
+        <p>Advanced perovskite nanomaterials for electronic and energy applications.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="products-header fade-up">
+    <div>
+      <div class="section-tag">Our Products</div>
+      <h2>Advanced <em>Low-Dimensional</em><br>Nanomaterial Catalogue</h2>
+    </div>
+    <p class="section-intro" style="max-width:400px;">Available in customizable compositions, morphologies, and batch quantities for research and industrial use.</p>
+  </div>
+
+  <div class="products-grid fade-up">
+    <div class="product-card">
+      <div class="product-dim">0D</div>
+      <h3>Quantum Dots</h3>
+      <p>High-quality semiconductor and metal oxide quantum dots with narrow size distribution and tunable properties.</p>
+      <div class="product-tags">
+        <span class="ptag">Optoelectronics</span>
+        <span class="ptag">Photodetectors</span>
+        <span class="ptag">Energy</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-dim">1D</div>
+      <h3>1D Nanostructures</h3>
+      <p>ZnO, SiO₂, WS₂, MoS₂, CaTiO₃ and custom compositions with improved electron mobility.</p>
+      <div class="product-tags">
+        <span class="ptag">Gas Sensors</span>
+        <span class="ptag">Li-ion Batteries</span>
+        <span class="ptag">Supercaps</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-dim">2D</div>
+      <h3>Quantum Sheets</h3>
+      <p>TMDs and metal oxide nanosheets with large surface area, tunable bandgap, and excellent catalytic properties.</p>
+      <div class="product-tags">
+        <span class="ptag">Semiconductors</span>
+        <span class="ptag">Flex Electronics</span>
+        <span class="ptag">Catalysis</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-dim">PK</div>
+      <h3>Perovskite Nanomaterials</h3>
+      <p>Engineered perovskite nanocrystals and hybrid nanostructures for solar and optoelectronic applications.</p>
+      <div class="product-tags">
+        <span class="ptag">Solar Research</span>
+        <span class="ptag">Optoelectronics</span>
+        <span class="ptag">Sensing</span>
+      </div>
+    </div>
+    <div class="product-custom">
+      <div style="flex:1;">
+        <h3>⚙️ Custom Synthesis Services</h3>
+        <p style="font-size:1rem; line-height:1.75; color:var(--text); opacity:0.85; margin:0.8rem 0 1.2rem;">From concept to composition — we customize nanomaterials to your innovation goals. Composition modification, particle size control, surface functionalization, morphology tuning, and batch scaling.</p>
+        <a href="#contact" class="btn-primary" style="font-size:0.8rem; padding:0.7rem 1.8rem;">Request Custom Order</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- APPLICATIONS -->
+<section id="applications">
+  <div class="fade-up">
+    <div class="section-tag">Applications</div>
+    <h2>Powering <em>Next-Generation</em> Technologies</h2>
+    <p class="section-intro">Our nanomaterials enable high-performance solutions across six key sectors driving the future of clean energy, mobility, and electronics.</p>
+  </div>
+
+  <div class="app-grid fade-up">
+    <div class="app-card">
+      <span class="app-icon">🔋</span>
+      <h3>Energy Storage</h3>
+      <p>Advanced nanomaterials for lithium-ion, sodium-ion, and solid-state batteries. High surface area materials improving energy density and long-term cycling stability.</p>
+    </div>
+    <div class="app-card">
+      <span class="app-icon">⚡</span>
+      <h3>Electric Vehicles</h3>
+      <p>High-performance electrode materials enabling faster charging, improved energy density, and thermal stability for next-generation EV battery systems.</p>
+    </div>
+    <div class="app-card">
+      <span class="app-icon">💻</span>
+      <h3>Semiconductor & Electronics</h3>
+      <p>Quantum dots, quantum sheets, and 1D nanostructures for FETs, photodetectors, flexible electronics, and advanced microelectronics research.</p>
+    </div>
+    <div class="app-card">
+      <span class="app-icon">⚡</span>
+      <h3>Supercapacitors</h3>
+      <p>High surface area layered nanomaterials enabling rapid charge-discharge performance, improved capacity, and exceptional electrochemical stability.</p>
+    </div>
+    <div class="app-card">
+      <span class="app-icon">🔍</span>
+      <h3>Sensing Technologies</h3>
+      <p>Engineered nanomaterials enhancing sensitivity and response time in gas, chemical, electrochemical, and temperature sensing applications.</p>
+    </div>
+    <div class="app-card">
+      <span class="app-icon">🏛️</span>
+      <h3>Research & Prototyping</h3>
+      <p>Tailored support for academic institutions, R&D labs, and early-stage startups with customizable nanomaterials for experimental and prototype development.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-inner fade-up">
+    <div>
+      <div class="section-tag">Why Choose Us</div>
+      <h2>The <em>INNOVASPECTRIX</em><br>Advantage</h2>
+      <ul class="why-list">
+        <li>Precision Composition Control — exact elemental ratios for reproducible performance</li>
+        <li>Layer & Size Engineering — dimensional control at the atomic scale</li>
+        <li>Custom Batch Synthesis — small and medium quantities with rapid turnaround</li>
+        <li>Device-Oriented Materials — optimized for real application requirements</li>
+        <li>Research & Industry Collaboration — from academia to production readiness</li>
+        <li>Scalable & Reproducible — bridging lab-scale discovery to industrial use</li>
+      </ul>
+    </div>
+    <div class="challenge-box">
+      <h3>🔎 The Industry Challenge We Solve</h3>
+      <p>Next-generation technologies demand materials with precise dimensional control, consistent reproducibility, and scalable synthesis. However, access to customizable nanomaterials in small and medium quantities remains severely limited.</p>
+      <p>Research groups and emerging industries face critical gaps:</p>
+      <div class="challenge-items">
+        <div class="ch-item">Lack of morphology control</div>
+        <div class="ch-item">Batch inconsistency</div>
+        <div class="ch-item">Limited customization</div>
+        <div class="ch-item">High import dependency</div>
+        <div class="ch-item">Long lead times</div>
+        <div class="ch-item">Poor scalability</div>
+      </div>
+      <p style="margin-top:1.5rem; font-style:italic; opacity:0.75;">We exist to close these gaps — providing a reliable, domestic, precision nanomaterial supply chain for innovators.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="fade-up">
+    <div class="section-tag">About Us</div>
+    <h2>Engineering Advanced Materials<br>for <em>Emerging Technologies</em></h2>
+  </div>
+  <div class="about-grid fade-up">
+    <div class="about-text">
+      <p>We are a deep-technology materials startup specializing in the precision synthesis of low-dimensional nanomaterials — including quantum dots (0D), quantum sheets, one-dimensional nanostructures, transition metal dichalcogenide (TMD) nanosheets, metal oxide nanomaterials, and perovskite nanostructures.</p>
+      <p>Our materials are engineered to enable high-performance applications across energy storage, electric vehicles, semiconductors, supercapacitors, and advanced sensing technologies. We deliver high-purity, morphology-controlled, and application-optimized nanomaterials tailored to research laboratories, startups, and emerging technology companies.</p>
+      <p>By combining academic depth with practical engineering, we bridge the gap between fundamental materials science and real-world innovation — accelerating the development of high-impact technologies with domestic precision.</p>
+      <div class="values-grid" style="margin-top:2rem;">
+        <div class="val-item">Scientific Integrity</div>
+        <div class="val-item">Precision Engineering</div>
+        <div class="val-item">Sustainable Development</div>
+        <div class="val-item">Industry Collaboration</div>
+        <div class="val-item">Innovation through Research</div>
+        <div class="val-item">Responsible Materials Science</div>
+      </div>
+    </div>
+    <div class="vision-mission">
+      <div class="vm-card">
+        <h4>Vision</h4>
+        <p>To become a leading provider of advanced low-dimensional nanomaterials that power the next generation of energy, electronic, and sensing technologies.</p>
+      </div>
+      <div class="vm-card">
+        <h4>Mission</h4>
+        <p>To deliver high-quality, customizable nanomaterials through precision synthesis and scalable processes while enabling innovation across research institutions and emerging industries.</p>
+      </div>
+      <div class="vm-card">
+        <h4>Our Commitment</h4>
+        <p>We advance materials science through responsible innovation, continuous research, and industry collaboration — accelerating high-impact technology development.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="fade-up" style="text-align:center; margin-bottom:1rem;">
+    <div class="section-tag" style="justify-content:center;">Our Team</div>
+    <h2>The <em>People</em> Behind the Science</h2>
+  </div>
+  <div class="team-grid fade-up">
+    <div class="team-card">
+      <div class="team-avatar">VM</div>
+      <h4>Dr. M. Valliammai</h4>
+      <div class="role">Founder</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">KP</div>
+      <h4>Ms. Kalpana Priyatharchini S</h4>
+      <div class="role">R&D Director</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">JM</div>
+      <h4>Dr. J. Mohanraj</h4>
+      <div class="role">R&D Director</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">NV</div>
+      <h4>Dr. N. Vinodhkumar</h4>
+      <div class="role">Advisor</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">VS</div>
+      <h4>Mrs. V. Sathiya Sarala</h4>
+      <div class="role">Sales & Support</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner fade-up">
+    <div>
+      <div class="section-tag">Contact</div>
+      <h2>Let's Build<br><em>Your Material</em></h2>
+      <div class="contact-quote">
+        "Need a custom material specification? From concept to composition — we customize nanomaterials for your innovation goals."
+      </div>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <strong>Address</strong>
+          <span>400 Feet Outer Ring Road, Avadi, Chennai – 600 062, Tamil Nadu, India</span>
+        </div>
+        <div class="contact-detail">
+          <strong>Email</strong>
+          <span>contact@innovaspectrix.com</span>
+        </div>
+        <div class="contact-detail">
+          <strong>Focus</strong>
+          <span>Research institutions · Startups · Emerging technology companies</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form fade-up">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Dr. / Prof. / Mr. / Ms.">
+        </div>
+        <div class="form-group">
+          <label>Organization</label>
+          <input type="text" placeholder="Institution / Company">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@organization.com">
+      </div>
+      <div class="form-group">
+        <label>Material of Interest</label>
+        <select>
+          <option value="">— Select Category —</option>
+          <option>Quantum Dots (0D)</option>
+          <option>1D Nanostructures</option>
+          <option>Quantum Sheets / TMDs (2D)</option>
+          <option>Perovskite Nanomaterials</option>
+          <option>Custom Synthesis Service</option>
+          <option>Research Collaboration</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Technical Requirements</label>
+        <textarea placeholder="Describe your application, required specifications, batch quantity, timeline..."></textarea>
+      </div>
+      <button class="btn-primary" style="align-self:flex-start;" onclick="handleSubmit(event)">Send Inquiry →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Innova<span>Spectrix</span></div>
+  <div class="footer-info">
+    © 2025 INNOVASPECTRIX · Avadi, Chennai, Tamil Nadu, India<br>
+    Precision Nanomaterial Synthesis
+  </div>
+  <div class="footer-tagline">Engineering Advanced Low-Dimensional Nanomaterials for Emerging Technologies</div>
+</footer>
+
+<script>
+// ---- ANIMATED BACKGROUND ----
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const nodes = [];
+const NODE_COUNT = 60;
+
+for (let i = 0; i < NODE_COUNT; i++) {
+  nodes.push({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: (Math.random() - 0.5) * 0.3,
+    r: Math.random() * 2 + 1,
+    opacity: Math.random() * 0.5 + 0.1
+  });
+}
+
+function drawBg() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Gradient mesh
+  const grd = ctx.createRadialGradient(
+    canvas.width * 0.3, canvas.height * 0.4, 0,
+    canvas.width * 0.3, canvas.height * 0.4, canvas.width * 0.8
+  );
+  grd.addColorStop(0, 'rgba(0,80,140,0.12)');
+  grd.addColorStop(1, 'transparent');
+  ctx.fillStyle = grd;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const grd2 = ctx.createRadialGradient(
+    canvas.width * 0.8, canvas.height * 0.7, 0,
+    canvas.width * 0.8, canvas.height * 0.7, canvas.width * 0.5
+  );
+  grd2.addColorStop(0, 'rgba(123,94,167,0.08)');
+  grd2.addColorStop(1, 'transparent');
+  ctx.fillStyle = grd2;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Node connections
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 150) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(0,212,255,${0.06 * (1 - dist/150)})`;
+        ctx.lineWidth = 0.5;
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Nodes
+  nodes.forEach(n => {
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,212,255,${n.opacity})`;
+    ctx.fill();
+    n.x += n.vx;
+    n.y += n.vy;
+    if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+    if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+  });
+
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
+// ---- SCROLL ANIMATIONS ----
+const fadeEls = document.querySelectorAll('.fade-up');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+
+fadeEls.forEach(el => observer.observe(el));
+
+// ---- FORM ----
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target;
+  btn.textContent = 'Inquiry Sent ✓';
+  btn.style.background = 'var(--gold)';
+  setTimeout(() => {
+    btn.textContent = 'Send Inquiry →';
+    btn.style.background = 'var(--accent)';
+  }, 3000);
+}
+
+// ---- NAV active on scroll ----
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.background = window.scrollY > 50 ? 'rgba(5,13,26,0.95)' : 'rgba(5,13,26,0.7)';
+});
+</script>
+</body>
+</html>
