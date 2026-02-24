@@ -818,9 +818,19 @@
 
   .team-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
     gap: 1.5rem;
-    margin-top: 4rem;
+    margin-top: 3rem;
+  }
+
+  .team-grid.core-team {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .team-grid.advisors {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .team-card {
@@ -1118,7 +1128,9 @@
     #hero, #offer, #products, #applications, #why, #about, #team, #contact { padding: 5rem 2rem; }
     .products-grid { grid-template-columns: repeat(2, 1fr); }
     .product-custom { grid-column: span 2; }
-    .team-grid { grid-template-columns: repeat(3, 1fr); }
+    
+    .team-grid.core-team { grid-template-columns: repeat(2, 1fr); }
+    
     footer { padding: 2rem; }
     .section-divider { margin: 0 2rem; width: calc(100% - 4rem); }
   }
@@ -1161,7 +1173,6 @@
     .app-grid { grid-template-columns: 1fr 1fr; }
     .products-grid { grid-template-columns: 1fr; }
     .product-custom { grid-column: span 1; }
-    .team-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 600px) {
@@ -1181,7 +1192,9 @@
     .app-grid { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
     .challenge-items { grid-template-columns: 1fr; }
-    .team-grid { grid-template-columns: 1fr 1fr; }
+    
+    .team-grid.core-team { grid-template-columns: 1fr; }
+    .team-grid.advisors { grid-template-columns: 1fr; }
     
     .product-custom { 
       flex-direction: column; 
@@ -1267,7 +1280,7 @@
   <div class="hero-content">
     <div class="hero-tag">Advanced Materials Startup · Chennai, India</div>
     <h1>Engineering <em>Quantum</em> &<br>Low-Dimensional<br>Nanomaterials</h1>
-    <p class="hero-sub">Precision synthesis of 0D, 1D, and 2D nanomaterials tailored for next-generation applications in energy storage,  EV batteries, semiconductors, and beyond.</p>
+    <p class="hero-sub">Precision synthesis of 0D, 1D, and 2D nanomaterials tailored for next-generation applications in energy storage, electric vehicles, semiconductors, and beyond.</p>
     <div class="hero-btns">
       <a href="#products" class="btn-primary">Explore Products</a>
       <a href="#contact" class="btn-outline">Request Custom Synthesis</a>
@@ -1526,7 +1539,9 @@
     <div class="section-tag" style="justify-content:center;">Our Team</div>
     <h2>The <em>Minds</em> Behind It</h2>
   </div>
-  <div class="team-grid fade-up">
+  
+  <!-- CORE TEAM GRID -->
+  <div class="team-grid core-team fade-up">
     <div class="team-card">
       <div class="team-avatar">VM</div>
       <h4>Dr. M. Valliammai</h4>
@@ -1543,16 +1558,31 @@
       <div class="role">R&D Director</div>
     </div>
     <div class="team-card">
-      <div class="team-avatar">NV</div>
-      <h4>Dr. N. Vinodhkumar</h4>
-      <div class="role">Advisor</div>
-    </div>
-    <div class="team-card">
       <div class="team-avatar">VS</div>
       <h4>Mrs. V. Sathiya Sarala</h4>
       <div class="role">Sales & Support</div>
     </div>
   </div>
+
+  <!-- SCIENTIFIC ADVISORY BOARD -->
+  <div class="fade-up" style="text-align:center; margin-top: 5rem; margin-bottom:1rem;">
+    <div class="section-tag" style="justify-content:center;">Advisory Board</div>
+    <h3 style="font-family: 'Rajdhani', sans-serif; font-size: 2.2rem; font-weight: 700; color: var(--white); text-shadow: 0 2px 8px rgba(0,0,0,0.6);">Scientific Advisors</h3>
+  </div>
+
+  <div class="team-grid advisors fade-up">
+    <div class="team-card">
+      <div class="team-avatar">PC</div>
+      <h4>Dr. P. Chandrakumar</h4>
+      <div class="role">Scientific Advisor</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">NV</div>
+      <h4>Dr. N. Vinodhkumar</h4>
+      <div class="role">Scientific Advisor</div>
+    </div>
+  </div>
+
 </section>
 
 <div class="section-divider"></div>
@@ -1770,4 +1800,3 @@ window.addEventListener('scroll', () => {
 </script>
 </body>
 </html>
-
