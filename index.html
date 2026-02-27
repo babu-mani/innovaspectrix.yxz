@@ -65,7 +65,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.2rem 4rem;
+    /* Reduced top/bottom padding so the taller logo doesn't make the navbar huge */
+    padding: 0.6rem 4rem; 
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     background: rgba(5,13,26,0.7);
@@ -76,25 +77,21 @@
   .nav-logo {
     display: flex;
     align-items: center;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
     z-index: 102;
     text-decoration: none;
   }
 
-  .nav-logo span { color: var(--gold); }
-
-  /* New CSS specifically for the uploaded logo */
+  /* --- LOGO IMAGE STYLING --- */
   .logo-img {
-    height: 50px; /* Adjust this to make the logo bigger or smaller in the nav */
+    height: 85px; /* INCREASED FROM 50px TO MAKE IT MUCH BIGGER */
     width: auto;
-    border-radius: 4px; /* Slight rounding to soften the edges */
+    border-radius: 6px; 
     object-fit: contain;
     transition: transform 0.3s ease;
+    
+    /* 🔥 PRO TIP: Remove the `/*` and `*/` on the line below to activate a magic filter! 
+       It will turn the white background black and make the logo blend seamlessly into your dark navbar. */
+    /* filter: invert(1) hue-rotate(180deg) brightness(1.2); */
   }
 
   .logo-img:hover {
@@ -1030,14 +1027,7 @@
   .footer-logo {
     display: flex;
     align-items: center;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: var(--accent);
-    letter-spacing: 0.15em;
   }
-
-  .footer-logo span { color: var(--gold); }
 
   .footer-info {
     font-family: 'JetBrains Mono', monospace;
@@ -1142,7 +1132,7 @@
      ========================================= */
 
   @media (max-width: 1200px) {
-    nav { padding: 1rem 2rem; }
+    nav { padding: 0.6rem 2rem; }
     #hero, #offer, #products, #applications, #why, #about, #team, #contact { padding: 5rem 2rem; }
     .products-grid { grid-template-columns: repeat(2, 1fr); }
     .product-custom { grid-column: span 2; }
@@ -1200,8 +1190,8 @@
     #hero, #offer, #products, #applications, #why, #about, #team, #contact { 
       padding: 4rem 1.5rem; 
     }
-    nav { padding: 1rem 1.5rem; }
-    .nav-logo { font-size: 1.2rem; }
+    nav { padding: 0.5rem 1.5rem; }
+    .logo-img { height: 65px; } /* Slightly smaller for mobile phones */
     
     .hero-btns { flex-direction: column; width: 100%; }
     .btn-primary, .btn-outline { width: 100%; text-align: center; }
