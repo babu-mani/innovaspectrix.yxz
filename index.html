@@ -74,6 +74,8 @@
   }
 
   .nav-logo {
+    display: flex;
+    align-items: center;
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
     font-size: 1.5rem;
@@ -81,9 +83,23 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     z-index: 102;
+    text-decoration: none;
   }
 
   .nav-logo span { color: var(--gold); }
+
+  /* New CSS specifically for the uploaded logo */
+  .logo-img {
+    height: 50px; /* Adjust this to make the logo bigger or smaller in the nav */
+    width: auto;
+    border-radius: 4px; /* Slight rounding to soften the edges */
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+
+  .logo-img:hover {
+    transform: scale(1.05);
+  }
 
   .nav-links {
     display: flex;
@@ -1012,6 +1028,8 @@
   }
 
   .footer-logo {
+    display: flex;
+    align-items: center;
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
     font-size: 1.2rem;
@@ -1256,7 +1274,10 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#hero" class="nav-logo" style="text-decoration:none;">Innova<span>Spectrix</span></a>
+  <!-- Updated Logo Tag -->
+  <a href="#hero" class="nav-logo">
+    <img src="logo.jpg" alt="INNOVASPECTRIX" class="logo-img" onerror="this.onerror=null; this.style.display='none';">
+  </a>
   
   <div class="hamburger" id="hamburger">
     <span></span>
@@ -1650,7 +1671,10 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Innova<span>Spectrix</span></div>
+  <!-- Updated Logo Tag in Footer -->
+  <div class="footer-logo">
+    <img src="logo.jpg" alt="INNOVASPECTRIX" class="logo-img" onerror="this.onerror=null; this.style.display='none';">
+  </div>
   <div class="footer-info">
     © 2025 INNOVASPECTRIX · Avadi, Chennai, Tamil Nadu, India<br>
     Precision Nanomaterial Synthesis
@@ -1800,9 +1824,3 @@ window.addEventListener('scroll', () => {
 </script>
 </body>
 </html>
-
-
-
-
-
-
